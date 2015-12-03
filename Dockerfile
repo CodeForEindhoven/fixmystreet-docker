@@ -4,7 +4,7 @@ MAINTAINER Milo van der Linden <milo@dogodigi.net>
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
 RUN locale-gen en_US.utf8
-RUN git clone --recursive https://github.com/mysociety/fixmystreet.git
+RUN git clone --recursive https://github.com/mysociety/fixmystreet.git /fixmystreet
 
 ENV LANG nl_NL.UTF-8
 ENV PG_HOST db
