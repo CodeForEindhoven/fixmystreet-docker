@@ -8,8 +8,6 @@ RUN locale-gen en_US.utf8 && \
 
 ENV LANG nl_NL.UTF-8
 
-WORKDIR /fixmystreet
-
 # Install packages
 RUN xargs -a conf/packages.ubuntu-precise apt-get install -y -q
 
@@ -21,19 +19,13 @@ RUN gem install --user-install --no-ri --no-rdoc bundler
 RUN $(ruby -rubygems -e 'puts Gem.user_dir')/bin/bundle install --deployment --path ../gems --binstubs ../gem-bin
 RUN bin/make_css
 
-# Copy shell script
-ADD install-database.sh /tmp/install-database.sh
-RUN chmod +x /tmp/install-database.sh
-ADD pgpass /root/.pgpass
-RUN chmod 0600 /root/.pgpass
-
-# Reports
-#RUN bin/update-all-reports
+# Add image configuration and scripts
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
 
 # Setup config
-ADD general.yml /fixmystreet/conf/general.yml
+COPY general.yml /fixmystreet/conf/general.yml
 
 EXPOSE 3000
-
-CMD ["/bin/bash"]
-ENTRYPOINT ["script/fixmystreet_app_server.pl", "-d", "--fork"]
+WORKDIR /fixmystreet
+CMD ["/run.sh"]
