@@ -7,7 +7,6 @@ RUN apt-get -qq update && \
         git
 
 # Defaults, modify with environment variable to change
-ENV LANG nl_NL.UTF-8
 ENV PG_HOST db
 ENV PG_PORT 5432
 ENV PG_DATABASE fms
@@ -45,7 +44,6 @@ RUN git clone --recursive https://github.com/mysociety/fixmystreet.git /fixmystr
 
 WORKDIR /fixmystreet
 
-RUN locale-gen en_US.utf8
 RUN xargs -a conf/packages.ubuntu-precise apt-get install -y -q
 RUN bin/install_perl_modules
 RUN gem install --user-install --no-ri --no-rdoc bundler
