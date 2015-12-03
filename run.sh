@@ -1,7 +1,10 @@
 #! /bin/bash
-#psql -h db -U fms fms < /fixmystreet/db/schema.sql
-#psql -h db -U fms fms < /fixmystreet/db/generate_secret.sql
-#psql -h db -U fms fms < /fixmystreet/db/alert_types.sql
+
+echo $PG_HOST:$PG_PORT:$PG_USER:$PG_PASSWORD > /root/.pgpass
+
+psql -h $PG_HOST -U $PG_USER $PG_DATABASE < /fixmystreet/db/schema.sql
+psql -h $PG_HOST -U $PG_USER $PG_DATABASE < /fixmystreet/db/generate_secret.sql
+psql -h $PG_HOST -U $PG_USER $PG_DATABASE  < /fixmystreet/db/alert_types.sql
 
 sed -i "s/__DB_HOST__/$PG_HOST/g" /fixmystreet/conf/general.yml
 sed -i "s/__DB_PORT__/$PG_PORT/g" /fixmystreet/conf/general.yml
