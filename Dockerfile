@@ -1,18 +1,19 @@
 FROM ubuntu:14.04
 MAINTAINER Milo van der Linden <milo@dogodigi.net>
 
-RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
+# Install base packages
+RUN apt-get -qq update && \
+    apt-get -yq install \
+        git
 
-RUN locale-gen en_US.utf8
-RUN git clone --recursive https://github.com/mysociety/fixmystreet.git /fixmystreet
-
+# Defaults, modify with environment variable to change
 ENV LANG nl_NL.UTF-8
 ENV PG_HOST db
 ENV PG_PORT 5432
 ENV PG_DATABASE fms
 ENV PG_USER fms
 ENV PG_PASSWORD fms
-ENV BASE_URL http://localhost:3000
+ENV BASE_URL 'http://localhost:3000'
 ENV EMAIL_DOMAIN example.org
 ENV CONTACT_EMAIL contact@example.org
 ENV CONTACT_NAME fixmystreet
@@ -33,22 +34,23 @@ ENV AREA_LINKS_FROM_PROBLEMS '0'
 ENV TESTING_COUNCILS ''
 ENV MESSAGE_MANAGER_URL ''
 
-WORKDIR /fixmystreet
-
-# Install packages
-RUN xargs -a conf/packages.ubuntu-precise apt-get install -y -q
-
-# Install prerequisite Perl modules
-RUN bin/install_perl_modules
-
-# Install compass and generate CSS
-RUN gem install --user-install --no-ri --no-rdoc bundler
-RUN $(ruby -rubygems -e 'puts Gem.user_dir')/bin/bundle install --deployment --path ../gems --binstubs ../gem-bin
-RUN bin/make_css
 
 # Add image configuration and scripts
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
+
+# Configure /fixmystreet folder
+RUN mkdir -p /fixmystreet
+RUN git clone --recursive https://github.com/mysociety/fixmystreet.git /fixmystreet
+
+WORKDIR /fixmystreet
+
+RUN locale-gen en_US.utf8
+RUN xargs -a conf/packages.ubuntu-precise apt-get install -y -q
+RUN bin/install_perl_modules
+RUN gem install --user-install --no-ri --no-rdoc bundler
+RUN $(ruby -rubygems -e 'puts Gem.user_dir')/bin/bundle install --deployment --path ../gems --binstubs ../gem-bin
+RUN bin/make_css
 
 # Setup config
 COPY general.yml /fixmystreet/conf/general.yml
