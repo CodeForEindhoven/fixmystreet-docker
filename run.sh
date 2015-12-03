@@ -1,6 +1,7 @@
 #! /bin/bash
 
 echo $PG_HOST:$PG_PORT:$PG_USER:$PG_PASSWORD > /root/.pgpass
+chmod 0600 /root/.pgpass
 
 psql -h $PG_HOST -U $PG_USER $PG_DATABASE < /fixmystreet/db/schema.sql
 psql -h $PG_HOST -U $PG_USER $PG_DATABASE < /fixmystreet/db/generate_secret.sql
