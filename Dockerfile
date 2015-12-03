@@ -1,10 +1,10 @@
 FROM ubuntu:14.04
-MAINTAINER Milo van der Linden "milo@dogodigi.net"
+MAINTAINER Milo van der Linden <milo@dogodigi.net>
 
-RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q git
+RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
-RUN locale-gen en_US.utf8 && \
-	cachebuster=b953b35 git clone --recursive https://github.com/mysociety/fixmystreet.git
+RUN locale-gen en_US.utf8
+RUN git clone --recursive https://github.com/mysociety/fixmystreet.git
 
 ENV LANG nl_NL.UTF-8
 ENV PG_HOST db
