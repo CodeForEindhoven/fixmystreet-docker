@@ -2,27 +2,26 @@ FROM ubuntu:14.04
 MAINTAINER Milo van der Linden <milo@dogodigi.net>
 
 # Install base packages
-RUN apt-get -qq update && \
-    apt-get -yq install \
-        git
-
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get -qq update && apt-get -yq install git
+RUN locale-gen en_US.utf8
 # Defaults, modify with environment variable to change
+ENV LANG en_US.utf8
 ENV PG_HOST db
 ENV PG_PORT 5432
 ENV PG_DATABASE fms
 ENV PG_USER fms
 ENV PG_PASSWORD fms
 ENV BASE_URL 'http://localhost:3000'
-ENV EMAIL_DOMAIN example.org
-ENV CONTACT_EMAIL contact@example.org
-ENV CONTACT_NAME fixmystreet
-ENV NOREPLY_EMAIL no_reply@example.org
-ENV STREET_EXAMPLE1 'High Street'
-ENV STREET_EXAMPLE2 'Main Street'
-ENV LANGUAGES 'en-gb,English,en_GB'
+ENV EMAIL_DOMAIN 'example.org'
+ENV CONTACT_EMAIL 'contact@example.org'
+ENV CONTACT_NAME 'fixmystreet'
+ENV NOREPLY_EMAIL 'no_reply@example.org'
+ENV EXAMPLE_PLACES ['High Street', 'Main Street']
+ENV APP_LANGUAGES 'en-gb,English,en_GB'
 ENV MAPIT_URL 'http://global.mapit.mysociety.org/'
-ENV MAPIT_TYPES 'O06'
-ENV MAPIT_ID_WHITELIST ''
+ENV MAPIT_TYPES ['O06']
+ENV MAPIT_ID_WHITELIST ['']
 ENV SMTP_SMARTHOST localhost
 ENV SMTP_TYPE ''
 ENV SMTP_PORT ''
