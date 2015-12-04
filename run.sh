@@ -20,8 +20,10 @@ sed -i "s/__NOREPLY_EMAIL__/$NOREPLY_EMAIL/g" /fixmystreet/conf/general.yml
 sed -i "s/__SMTP_SMARTHOST__/$SMTP_SMARTHOST/g" /fixmystreet/conf/general.yml
 sed -i "s#__GAZE_URL__#$GAZE_URL#g" /fixmystreet/conf/general.yml
 sed -i "s#__MAPIT_URL__#$MAPIT_URL#g" /fixmystreet/conf/general.yml
-MAPIT_URL
-# reports
+
+# Init reports
 /fixmystreet/bin/update-all-reports
-# run
+# Init i18n
+commonlib/bin/gettext-makemo FixMyStreet
+# Run
 /fixmystreet/script/fixmystreet_app_server.pl -d --fork

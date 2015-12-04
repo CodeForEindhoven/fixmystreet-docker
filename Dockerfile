@@ -5,6 +5,8 @@ MAINTAINER Milo van der Linden <milo@dogodigi.net>
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -qq update && apt-get -yq install git
 RUN locale-gen en_US.utf8
+RUN locale-gen nl_NL.utf8
+
 # Defaults, modify with environment variable to change
 ENV LANG en_US.utf8
 ENV PG_HOST db
