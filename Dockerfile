@@ -12,26 +12,14 @@ ENV PG_PORT 5432
 ENV PG_DATABASE fms
 ENV PG_USER fms
 ENV PG_PASSWORD fms
-ENV BASE_URL 'http://localhost:3000'
-ENV EMAIL_DOMAIN 'example.org'
-ENV CONTACT_EMAIL 'contact@example.org'
-ENV CONTACT_NAME 'fixmystreet'
-ENV NOREPLY_EMAIL 'no_reply@example.org'
-ENV EXAMPLE_PLACES ['High Street', 'Main Street']
-ENV APP_LANGUAGES 'en-gb,English,en_GB'
-ENV MAPIT_URL 'http://global.mapit.mysociety.org/'
-ENV MAPIT_TYPES ['O06']
-ENV MAPIT_ID_WHITELIST ['']
+ENV BASE_URL http://localhost:3000
+ENV EMAIL_DOMAIN example.org
+ENV CONTACT_EMAIL contact@example.org
+ENV CONTACT_NAME fixmystreet
+ENV NOREPLY_EMAIL no_reply@example.org
+ENV MAPIT_URL http://global.mapit.mysociety.org/
 ENV SMTP_SMARTHOST localhost
-ENV SMTP_TYPE ''
-ENV SMTP_PORT ''
-ENV SMTP_USERNAME ''
-ENV SMTP_PASSWORD ''
-ENV GAZE_URL 'http://gaze.mysociety.org/gaze'
-ENV AREA_LINKS_FROM_PROBLEMS '0'
-ENV TESTING_COUNCILS ''
-ENV MESSAGE_MANAGER_URL ''
-
+ENV GAZE_URL http://gaze.mysociety.org/gaze
 
 # Add image configuration and scripts
 ADD run.sh /run.sh
